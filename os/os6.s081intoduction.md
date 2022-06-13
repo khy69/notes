@@ -18,7 +18,7 @@
 - 用户态程序
 - 内核态程序
 
-![](/Users/khy/Documents/cs/notes/os/imgs/os-architecture.png)
+![](./imgs/os-architecture.png)
 
 重点关注：kernel
 
