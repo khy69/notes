@@ -1,2 +1,4 @@
 # notes
-My notes about cs
+## os
+
+- [ ] 6.s081
