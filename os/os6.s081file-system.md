@@ -84,5 +84,6 @@ nmeta 46 (boot, super, log blocks 30 inode blocks 13, bitmap blocks 1) blocks 95
 
 #### sleep lock（期待disk）
 
-- block cache作为访问或修改block的中间介质，需要磁盘操作 which need很长时间，且spinlock（期待memory）关闭了中断，导致**无法操作disk**，即使获取了锁也只可能会导致在一个cpu上空转，**无法通过中断出让cpu**
-- sleep lock作为一个中间的替代品，获取spinlock之后，表明当前sleep lock有可能被获取，若无法获取，则通过sleep出让cpu；否则通过`lk->locked=1`表明获取了该锁
+- block cache作为访问或修改block的中间介质，可能需要磁盘操作 which need很长时间，且spinlock（期待memory）关闭了中断，即使disk准备好后也无法获知该信息，所以即使获取了锁也可能会导致在一个cpu上空转
+- sleep lock作为一个中间的替代品，获取spinlock之后，表明当前sleep lock有可能被获取，若无法获取，则通过sleep出让cpu，也不需要等待disk；否则通过`lk->locked=1`表明获取了该锁，之后可以释放spinlock，直接操作disk
+- Todo:操作disk和trap的关系？
